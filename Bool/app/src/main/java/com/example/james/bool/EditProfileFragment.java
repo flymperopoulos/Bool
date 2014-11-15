@@ -161,7 +161,7 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
                 final MyActivity activity = (MyActivity) getActivity();
                 final String first = FirstName.getText().toString();
                 final String last = LastName.getText().toString();
-                Intent BeginMain = new Intent("mapkin.mapkin_android.LATERMAIN");
+                Intent BeginMain = new Intent("android.intent.action.LATERMAIN");
                 startActivity(BeginMain);
             }
         });
