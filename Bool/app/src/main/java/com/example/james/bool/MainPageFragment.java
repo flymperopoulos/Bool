@@ -39,6 +39,7 @@ public class MainPageFragment extends Fragment {
         final ArrayList<String> questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");
         questions.add("Do you like Filippos or James?");
+
         final ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,questions);
         listViewQuestion.setAdapter(questionAdapter);
 
