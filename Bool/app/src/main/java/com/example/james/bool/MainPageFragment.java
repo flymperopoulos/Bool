@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,35 +36,37 @@ public class MainPageFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
         ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
-        ArrayList<String> questions = new ArrayList<String>();
+        final ArrayList<String> questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");
         questions.add("Do you like Filippos or James?");
-        ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,questions);
+        final ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,questions);
         listViewQuestion.setAdapter(questionAdapter);
 
-        listViewQuestion.setOnClickListener(new View.OnClickListener() {
+        listViewQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                alert.setTitle("Set a Profile Picture");
-                alert.setPositiveButton("Choose from Library", new DialogInterface.OnClickListener() {
+                alert.setTitle("What do you think?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue accessing library
-                        startActivityForResult(new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), SELECT_IMAGE);
+                        questions.remove(i);
+                        questionAdapter.notifyDataSetChanged();
                     }
                 })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        questions.remove(i);
+                        questionAdapter.notifyDataSetChanged();
+                    }
+                })
+
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
             }
         });
         return rootView;
-
     }
-
 }
