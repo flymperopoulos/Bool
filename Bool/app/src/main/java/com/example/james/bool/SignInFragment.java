@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.spec.PSSParameterSpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
  */
 public class SignInFragment extends Fragment {
 
-
+    HttpRequestHandler httpRequestHandler;
     private Context context;
 
     @Override
@@ -38,6 +39,7 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.login_fragment, container, false);
         Button signUp = (Button) rootView.findViewById(R.id.sign_up_button);
+        httpRequestHandler = ((MyActivity)getActivity()).httpRequestHandler;
 
         final TextView ForgotPassword = (TextView) rootView.findViewById(R.id.forgot_password);
         ForgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
@@ -71,8 +73,11 @@ public class SignInFragment extends Fragment {
                 Matcher matcher = pattern.matcher(email);
 
                 if (matcher.matches()&& Password.length()>8){
+                    httpRequestHandler.postCredentials(email, Password.getText().toString());
+
                     MyActivity activity = (MyActivity) getActivity();
                     activity.changeToEditProfile();
+
                 }
                 else if(!matcher.matches() && Password.length()>8){
                     Toast.makeText(context,"Invalid email address",Toast.LENGTH_SHORT).show();

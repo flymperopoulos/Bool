@@ -120,8 +120,8 @@ public class HttpRequestHandler {
             }
         });
         queue.add(jReq);
-
     }
+
     public void postQuestion(String q, String a, String b) {
         // Create a new HttpClient and Post Header
         JSONObject obj = createJSON(q, a, b);
@@ -139,8 +139,35 @@ public class HttpRequestHandler {
             }
         });
         queue.add(jsonRequest);
-
     }
+
+    public boolean postCredentials(String email, String password){
+        JSONObject obj = new JSONObject();
+
+        try {
+            obj.put("email",email);
+            obj.put("password",password);
+            Log.d("JSON putting", "go here");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, "http://104.131.46.241:3000/mobilelogin", obj,
+                new Response.Listener<JSONObject>(){
+                    public void onResponse(JSONObject response){
+                        Log.d("JSON returning", response.toString());
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                error.printStackTrace();
+            }
+        });
+        queue.add(jsonRequest);
+        return true;
+    }
+
     public JSONObject createJSON(String q, String a, String b){
         id = ((MyTabActivity)context).id;
         JSONObject object = new JSONObject();

@@ -16,10 +16,14 @@ import android.os.Build;
 
 public class MyActivity extends Activity {
 
+    HttpRequestHandler httpRequestHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        httpRequestHandler = new HttpRequestHandler(this);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new SignInFragment())
