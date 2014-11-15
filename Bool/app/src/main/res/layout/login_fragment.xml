@@ -86,7 +86,6 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="25sp"
-
             android:textColor="#ffffff"
             android:layout_marginRight="10sp"
             />

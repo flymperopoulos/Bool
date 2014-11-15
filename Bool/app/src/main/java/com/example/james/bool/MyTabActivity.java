@@ -31,7 +31,7 @@ public class MyTabActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activitytab_my);
 
         questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");
@@ -75,10 +75,8 @@ public class MyTabActivity extends Activity {
             case R.id.action_questions:
                 addQuestion();
                 return true;
-            case R.id.action_settings:
-
+            case R.id.action_gear:
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
