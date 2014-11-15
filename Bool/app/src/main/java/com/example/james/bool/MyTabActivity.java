@@ -17,7 +17,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 
-public class MyActivity extends Activity {
+public class MyTabActivity extends Activity {
 
     ActionBar.Tab tab1, tab2, tab3;
     Fragment fragmentTab1 = new GroupFragment();
@@ -89,14 +89,14 @@ public class MyActivity extends Activity {
         alert.setTitle("New Question");
         final EditText edit = new EditText(this);
         alert.setView(edit);
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 String newQuestion = edit.getText().toString();
                 questions.add(newQuestion);
                 questionAdapter.notifyDataSetChanged();
             }
         })
-            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // do nothing
                 }
