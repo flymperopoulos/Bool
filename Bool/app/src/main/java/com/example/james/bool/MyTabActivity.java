@@ -15,6 +15,7 @@ import android.os.Build;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MyTabActivity extends Activity {
@@ -96,8 +97,16 @@ public class MyTabActivity extends Activity {
         alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 String newQuestion = edit.getText().toString();
-                questions.add(newQuestion);
-                questionAdapter.notifyDataSetChanged();
+                newQuestion = newQuestion.replaceAll("^\\p{Punct}*|\\p{Punct}+$|\\p{Punct}{2,}", "");
+                ArrayList<String> split = new ArrayList<String>(Arrays.asList(newQuestion.split(" ")));
+                if (split.contains("or")){
+                    String a = split.get(split.indexOf("or")-1);
+                    String b = split.get(split.indexOf("or")+1);
+                    httpRequestHandler.postQuestion(newQuestion, a, b);
+                }
+                else{
+                    httpRequestHandler.postQuestion(newQuestion, "yes", "no");
+                }
             }
         })
             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

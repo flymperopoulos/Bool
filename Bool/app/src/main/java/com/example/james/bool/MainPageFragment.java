@@ -115,7 +115,7 @@ public class MainPageFragment extends Fragment {
                 }
             }
         });
-        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
+//        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
 
 //        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
 //            public void onSwipeTop() {}
