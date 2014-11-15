@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+    tools:context=".MainActivity$PlaceholderFragment"
+    android:background="#F2F2F2"
+    android:orientation="vertical"
+    android:padding="6dp"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linlayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        tools:context=".MainActivity$PlaceholderFragment"
+        android:background="#F2F2F2"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="6dp"
+        >
+
+
+        <EditText
+            android:id="@+id/firstname"
+            android:background="@drawable/email_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:inputType="textPersonName"
+            android:layout_gravity="center"
+            android:hint="@string/firstname"
+            android:textSize="24sp"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/lastname"
+            android:background="@drawable/password_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:inputType="textPersonName"
+            android:hint="@string/lastname"
+            android:textSize="24sp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/age"
+            android:background="@drawable/password_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:hint="@string/age"
+            android:textSize="24sp"
+            android:gravity="center"
+            />
+
+            <RadioGroup
+                android:id="@+id/radioSex"
+                android:layout_width="fill_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/password_textbox"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+
+            </RadioGroup>
+
+        <Spinner
+            android:id="@+id/spinnerRace"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/password_textbox"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            />
+
+        <EditText
+            android:id="@+id/city"
+            android:background="@drawable/password_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:inputType="textPersonName"
+            android:hint="@string/city"
+            android:textSize="24sp"
+            android:gravity="center"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerState"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/password_textbox"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerOccupation"
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/password_textbox"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editpic"
+        android:layout_marginBottom="20dp"
+        android:background="#F2F2F2"
+        android:layout_above="@+id/linlayout2"
+        android:textColor="#87CEFA"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:id="@+id/personImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edit_button"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/continue_button"
+        android:background="#87CEFA"
+        android:layout_width="140dp"
+        android:layout_below="@+id/linlayout2"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_centerInParent="true"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:layout_marginRight="10sp"
+        />
+</RelativeLayout>

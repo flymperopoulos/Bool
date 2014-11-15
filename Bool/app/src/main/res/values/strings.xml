@@ -11,5 +11,49 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="login_text">We will create an account for you!</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="editpic">Edit Picture</string>
+    <string name="gender">Gender</string>
+    <string name="race">Race</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="Occupation">Occupation</string>
+    <string name="age">Age</string>
 
+
+    <string-array name="races">
+        <item>Race</item>
+        <item>Caucasian</item>
+        <item>African American/Black</item>
+        <item>Hispanic/Latino</item>
+        <item>Asian</item>
+        <item>Middle eastern</item>
+        <item>Pacific Islander</item>
+        <item>Native American/Alaskan</item>
+    </string-array>
+
+    <string-array name="occupations">
+        <item>Occupation</item>
+        <item>Intern</item>
+        <item>Analyst</item>
+        <item>Manager</item>
+        <item>Director</item>
+        <item>Engineer</item>
+        <item>Owner</item>
+        <item>Student</item>
+    </string-array>
+
+
+    <string-array name="states">
+        <item>State</item>
+        <item>MA</item>
+        <item>Analyst</item>
+        <item>Manager</item>
+        <item>Director</item>
+        <item>Engineer</item>
+        <item>Owner</item>
+        <item>Student</item>
+    </string-array>
 </resources>

@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+    tools:context=".MainActivity$PlaceholderFragment"
+    android:background="#F2F2F2"
+    android:orientation="vertical"
+    android:padding="6dp"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        tools:context=".MainActivity$PlaceholderFragment"
+        android:background="#F2F2F2"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="6dp"
+        >
+
+        <TextView
+            android:id="@+id/login_text"
+            android:background="#F2F2F2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="18dp"
+            android:text="@string/login_text"
+            android:textSize="20sp"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/email"
+            android:background="@drawable/email_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center"
+            android:hint="@string/email"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/password"
+            android:background="@drawable/password_textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:textSize="24sp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linlayout"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        >
+
+        <Button
+            android:id="@+id/sign_up_button"
+            android:background="#87CEFA"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:layout_marginRight="10sp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttons"
+        android:background="#F2F2F2"
+        android:text="@string/forgot"
+        android:textColorLink="#000000"
+        android:textSize="13sp"
+        />
+
+</RelativeLayout>

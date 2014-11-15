@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 
-
 public class MyActivity extends Activity {
 
     @Override
@@ -62,6 +61,15 @@ public class MyActivity extends Activity {
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
+
+    public void changeToEditProfile() {
+        EditProfileFragment fragment = new EditProfileFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
+    }
+
 
 
 
