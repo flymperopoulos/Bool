@@ -80,8 +80,9 @@ public class MyTabActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
+
     public void addQuestion(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("New Question");

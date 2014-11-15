@@ -18,6 +18,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,10 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
     static final int SELECT_IMAGE = 0;
 
     private Context context;
+
+
+    Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
+            "fonts/Blambot.otf");
 
     @Override
     public void onAttach(Activity activity) {
@@ -103,7 +108,6 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
         Spinner spinnerRace = (Spinner) rootView.findViewById(R.id.spinnerRace);
         Spinner spinnerOccupation = (Spinner) rootView.findViewById(R.id.spinnerOccupation);
         Spinner spinnerState = (Spinner) rootView.findViewById(R.id.spinnerState);
-
 
         Button cont = (Button) rootView.findViewById(R.id.continue_button);
         Button editprof = (Button) rootView.findViewById(R.id.edit_button);
