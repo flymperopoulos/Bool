@@ -1,7 +1,11 @@
 package com.example.james.bool;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,53 +27,37 @@ public class QuestionAdapter extends ArrayAdapter<String>{
 
     }
 
-    private class ChatHolder {
-        TextView name, body, time;
-        ImageView picture;
-        View background;
+    private class QuestionHolder {
+        TextView name, body;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent){
-        ChatHolder holder;
+        QuestionHolder holder = new QuestionHolder();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(resource, parent, false);
-        holder = new ChatHolder();
 
         //TextViews
-        holder.name = (TextView) view.findViewById(R.id.item_profile_name);
-        holder.body = (TextView) view.findViewById(R.id.item_chat_body);
-        holder.time = (TextView) view.findViewById(R.id.item_chat_time);
+//        holder.name = (TextView) view.findViewById(R.id.item_profile_name);
+        holder.body = (TextView) view.findViewById(R.id.question_item);
 
-        //ImageViews
-        holder.background = view.findViewById(R.id.item_profile_background);
-        holder.picture = (ImageView) view.findViewById(R.id.item_profile_picture);
-        fillViews(holder, chats.get(position));
+        fillViews(holder, questions.get(position));
         return view;
     }
     @Override
     public int getCount(){
-        return this.chats.size();
+        return this.questions.size();
     }
 
     @Override
-    public Chat getItem(int position) {
-        return this.chats.get(position);
+    public String getItem(int position) {
+        return this.questions.get(position);
     }
 
-    private void fillViews(ChatHolder holder, Chat chat){
-        holder.name.setText(chat.getName());
-        holder.body.setText(chat.getMessage());
-        holder.time.setText(String.valueOf(chat.getTime()));
+    private void fillViews(QuestionHolder holder, String question){
+        holder.body.setText(question);
 
         //holder.picture.setImageDrawable(getProfileDrawable(chat.userId));
     }
-
-
-    public void addChat(Chat chat){
-        this.chats.add(chat);
-        notifyDataSetChanged();
-    }
-}
 
 }

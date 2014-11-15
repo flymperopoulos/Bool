@@ -24,6 +24,7 @@ public class MainPageFragment extends Fragment {
 
     private Context context;
     ArrayList<String> questions;
+    QuestionAdapter questionAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -38,13 +39,12 @@ public class MainPageFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
         ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
         questions = ((MyActivity)getActivity()).questions;
+        questionAdapter = ((MyActivity)getActivity()).questionAdapter;
 
 
         questions = new ArrayList<String>();
-        questions.add("Do you like Facebook or Google?");
-        questions.add("Do you like Filippos or James?");
 
-        final ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,questions);
+        questionAdapter.notifyDataSetChanged();
 
         listViewQuestion.setAdapter(questionAdapter);
 

@@ -2,7 +2,9 @@ package com.example.james.bool;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,7 @@ public class MyActivity extends Activity {
     Fragment fragmentTab2 = new MainPageFragment();
     Fragment fragmentTab3 = new ResultFragment();
     ActionBar actionBar;
+    QuestionAdapter questionAdapter;
 
     ArrayList<String> questions;
 
@@ -30,6 +34,9 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
 
         questions = new ArrayList<String>();
+        questions.add("Do you like Facebook or Google?");
+        questions.add("Do you like Filippos or James?");
+        questionAdapter = new QuestionAdapter(this, R.layout.question_item, questions);
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -66,7 +73,7 @@ public class MyActivity extends Activity {
 
         switch (item.getItemId()) {
             case R.id.action_questions:
-
+                addQuestion();
                 return true;
             case R.id.action_settings:
 
@@ -77,5 +84,24 @@ public class MyActivity extends Activity {
         }
 
     }
-
+    public void addQuestion(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("New Question");
+        final EditText edit = new EditText(this);
+        alert.setView(edit);
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                String newQuestion = edit.getText().toString();
+                questions.add(newQuestion);
+                questionAdapter.notifyDataSetChanged();
+            }
+        })
+            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // do nothing
+                }
+            })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 }
