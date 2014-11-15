@@ -4,5 +4,12 @@
     <string name="app_name">Bool</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="emailText">email</string>
+    <string name="passwordText">password</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login_text">We will create an account for you!</string>
 
 </resources>

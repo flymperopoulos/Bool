@@ -3,6 +3,8 @@ package com.example.james.bool;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +23,7 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainPageFragment())
+                    .add(R.id.container, new SignInFragment())
                     .commit();
         }
     }
@@ -44,4 +46,23 @@ public class MyActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void changeToSignInFragment() {
+        SignInFragment fragment = new SignInFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
+    }
+
+    public void changeToMainPageFragment() {
+        MainPageFragment fragment = new MainPageFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
+    }
+
+
+
 }
