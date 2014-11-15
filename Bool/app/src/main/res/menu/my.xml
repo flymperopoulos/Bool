@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MyActivity" >
+    tools:context=".MyTabActivity" >
 
     <item
         android:id="@+id/action_questions"
         android:orderInCategory="100"
         android:showAsAction="always"
-
+        android:icon="@drawable/ic_launcher"
         android:title="new_q"/>
 
     <item android:id="@+id/action_settings"
