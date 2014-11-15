@@ -19,7 +19,7 @@ public class IntroActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent BeginMain = new Intent("mapkin.mapkin_android.BEGINMAIN");
+                    Intent BeginMain = new Intent("android.intent.action.BEGINMAIN");
                     startActivity(BeginMain);
                 }
             }
