@@ -19,7 +19,9 @@ public class IntroActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent BeginMain = new Intent("android.intent.action.BEGINMAIN");
+//                    Intent BeginMain = new Intent("android.intent.action.BEGINMAIN");
+                    Intent BeginMain = new Intent("android.intent.action.LATERMAIN");
+
                     startActivity(BeginMain);
                 }
             }

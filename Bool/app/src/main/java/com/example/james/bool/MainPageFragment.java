@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,36 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by james on 11/14/14.
  */
 public class MainPageFragment extends Fragment {
 
-    private Context context;
+    Context context;
     ArrayList<String> questions;
     QuestionAdapter questionAdapter;
+    RequestQueue queue;
+    JSONArray questionList;
+
+    HttpRequestHandler httpRequestHandler;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -39,9 +59,12 @@ public class MainPageFragment extends Fragment {
         final ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
         questions = ((MyTabActivity)getActivity()).questions;
         questionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
+        httpRequestHandler = ((MyTabActivity)getActivity()).httpRequestHandler;
+
+        httpRequestHandler.getQuestions();
+        questions = httpRequestHandler.questionList;
 
 
-        questions = new ArrayList<String>();
 
         questionAdapter.notifyDataSetChanged();
 
@@ -59,15 +82,13 @@ public class MainPageFragment extends Fragment {
                     alert.setPositiveButton(split.get(split.indexOf("or")-1), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Continue accessing library
-                            questions.remove(i);
-                            questionAdapter.notifyDataSetChanged();
+                            questionAdapter.removeQuestions(i);
                         }
                     })
                             .setNegativeButton(split.get(split.indexOf("or")+1), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
-                                    questions.remove(i);
-                                    questionAdapter.notifyDataSetChanged();
+                                    questionAdapter.removeQuestions(i);
                                 }
                             })
 
@@ -79,41 +100,36 @@ public class MainPageFragment extends Fragment {
                     alert.setTitle("What do you think?");
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // Continue accessing library
-                            questions.remove(i);
-                            questionAdapter.notifyDataSetChanged();
+                            questionAdapter.removeQuestions(i);
                         }
                     })
 
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
-                                    questions.remove(i);
-                                    questionAdapter.notifyDataSetChanged();
+                                    questionAdapter.removeQuestions(i);
                                 }
                             })
-
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
             }
         });
-        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
-            public void onSwipeTop() {
-            }
+        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
 
-            public void onSwipeRight() {
-                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
-
-            }
-
-            public void onSwipeLeft() {
-                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
-            }
-
-            public void onSwipeBottom() {
-            }
-        });
+//        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+//            public void onSwipeTop() {}
+//
+//            public void onSwipeRight() {
+//                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            public void onSwipeLeft() {
+//                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            public void onSwipeBottom() {}
+//        });
 
         return rootView;
     }
