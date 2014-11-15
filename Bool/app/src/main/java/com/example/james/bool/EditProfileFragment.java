@@ -48,9 +48,6 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
     private Context context;
 
 
-    Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
-            "fonts/Blambot.otf");
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
