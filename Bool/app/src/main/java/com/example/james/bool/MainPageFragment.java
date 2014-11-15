@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +98,22 @@ public class MainPageFragment extends Fragment {
                 }
             }
         });
+        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+            public void onSwipeTop() {
+            }
 
+            public void onSwipeRight() {
+                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
+
+            }
+
+            public void onSwipeLeft() {
+                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeBottom() {
+            }
+        });
 
         return rootView;
     }
