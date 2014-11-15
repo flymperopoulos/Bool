@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class MainPageFragment extends Fragment {
 
     private Context context;
+    ArrayList<String> questions;
 
     @Override
     public void onAttach(Activity activity) {
@@ -36,11 +37,15 @@ public class MainPageFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
         ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
-        final ArrayList<String> questions = new ArrayList<String>();
+        questions = ((MyActivity)getActivity()).questions;
+
+
+        questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");
         questions.add("Do you like Filippos or James?");
 
         final ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,questions);
+
         listViewQuestion.setAdapter(questionAdapter);
 
         listViewQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,6 +73,8 @@ public class MainPageFragment extends Fragment {
                 .show();
             }
         });
+
+
         return rootView;
     }
 }
