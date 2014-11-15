@@ -60,8 +60,19 @@ public class QuestionAdapter extends ArrayAdapter<String>{
         //holder.picture.setImageDrawable(getProfileDrawable(chat.userId));
     }
     public void addQuestions(String s){
+//        this.questions = new ArrayList<String>();
+
         this.questions.add(s);
         notifyDataSetChanged();
+    }
+    public void removeQuestions(int pos){
+//        this.questions = new ArrayList<String>();
+
+        this.questions.remove(pos);
+        notifyDataSetChanged();
+    }
+    public void reset(){
+        this.questions = new ArrayList<String>();
     }
 
 }

@@ -28,6 +28,7 @@ public class MyTabActivity extends Activity {
 
     ArrayList<String> questions;
     HttpRequestHandler httpRequestHandler;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MyTabActivity extends Activity {
 
         httpRequestHandler = new HttpRequestHandler(this);
 
+        id = "BITCH";
         questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");
         questions.add("Do you like Filippos or James?");

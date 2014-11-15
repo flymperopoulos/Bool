@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by james on 11/14/14.
@@ -41,6 +43,7 @@ public class MainPageFragment extends Fragment {
     JSONArray questionList;
 
     HttpRequestHandler httpRequestHandler;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -79,15 +82,13 @@ public class MainPageFragment extends Fragment {
                     alert.setPositiveButton(split.get(split.indexOf("or")-1), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Continue accessing library
-                            questions.remove(i);
-                            questionAdapter.notifyDataSetChanged();
+                            questionAdapter.removeQuestions(i);
                         }
                     })
                             .setNegativeButton(split.get(split.indexOf("or")+1), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
-                                    questions.remove(i);
-                                    questionAdapter.notifyDataSetChanged();
+                                    questionAdapter.removeQuestions(i);
                                 }
                             })
 
@@ -99,64 +100,22 @@ public class MainPageFragment extends Fragment {
                     alert.setTitle("What do you think?");
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // Continue accessing library
-                            questions.remove(i);
-                            questionAdapter.notifyDataSetChanged();
+                            questionAdapter.removeQuestions(i);
                         }
                     })
 
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
-                                    questions.remove(i);
-                                    questionAdapter.notifyDataSetChanged();
+                                    questionAdapter.removeQuestions(i);
                                 }
                             })
-
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
             }
         });
-
-
-        String URL = "http://104.131.46.241:3000/questions";
-
-        queue = Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jReq = new JsonArrayRequest(URL,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        ArrayList<String> result = new ArrayList<String>();
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                String s = response.getJSONObject(i).getString("question");
-                                Log.d("BITCH", s);
-                                questions.add(s);
-                            questionAdapter.addQuestions(s);
-                                questionAdapter.notifyDataSetChanged();
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Handle error
-
-            }
-        });
-        queue.add(jReq);
-
-
-
-
-
+        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
 
 //        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
 //            public void onSwipeTop() {}
