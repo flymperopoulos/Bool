@@ -59,5 +59,9 @@ public class QuestionAdapter extends ArrayAdapter<String>{
 
         //holder.picture.setImageDrawable(getProfileDrawable(chat.userId));
     }
+    public void addQuestions(String s){
+        this.questions.add(s);
+        notifyDataSetChanged();
+    }
 
 }

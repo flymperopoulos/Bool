@@ -27,11 +27,14 @@ public class MyTabActivity extends Activity {
     QuestionAdapter questionAdapter;
 
     ArrayList<String> questions;
+    HttpRequestHandler httpRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        httpRequestHandler = new HttpRequestHandler(this);
 
         questions = new ArrayList<String>();
         questions.add("Do you like Facebook or Google?");

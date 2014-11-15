@@ -6,12 +6,25 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +34,13 @@ import java.util.Arrays;
  */
 public class MainPageFragment extends Fragment {
 
-    private Context context;
+    Context context;
     ArrayList<String> questions;
     QuestionAdapter questionAdapter;
+    RequestQueue queue;
+    JSONArray questionList;
+
+    HttpRequestHandler httpRequestHandler;
 
     @Override
     public void onAttach(Activity activity) {
@@ -39,9 +56,12 @@ public class MainPageFragment extends Fragment {
         final ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
         questions = ((MyTabActivity)getActivity()).questions;
         questionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
+        httpRequestHandler = ((MyTabActivity)getActivity()).httpRequestHandler;
+
+        httpRequestHandler.getQuestions();
+        questions = httpRequestHandler.questionList;
 
 
-        questions = new ArrayList<String>();
 
         questionAdapter.notifyDataSetChanged();
 
@@ -98,22 +118,59 @@ public class MainPageFragment extends Fragment {
                 }
             }
         });
-        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
-            public void onSwipeTop() {
-            }
 
-            public void onSwipeRight() {
-                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
 
-            }
+        String URL = "http://104.131.46.241:3000/questions";
 
-            public void onSwipeLeft() {
-                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
-            }
+        queue = Volley.newRequestQueue(getActivity());
+        JsonArrayRequest jReq = new JsonArrayRequest(URL,
+                new Response.Listener<JSONArray>() {
 
-            public void onSwipeBottom() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ArrayList<String> result = new ArrayList<String>();
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                String s = response.getJSONObject(i).getString("question");
+                                Log.d("BITCH", s);
+                                questions.add(s);
+                            questionAdapter.addQuestions(s);
+                                questionAdapter.notifyDataSetChanged();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+
             }
         });
+        queue.add(jReq);
+
+
+
+
+
+
+//        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+//            public void onSwipeTop() {}
+//
+//            public void onSwipeRight() {
+//                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            public void onSwipeLeft() {
+//                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            public void onSwipeBottom() {}
+//        });
 
         return rootView;
     }
