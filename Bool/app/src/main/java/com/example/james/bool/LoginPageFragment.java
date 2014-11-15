@@ -27,7 +27,7 @@ public class LoginPageFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.login_fragment, container, false);
         Button signIn = (Button) rootView.findViewById(R.id.sign_in_button);
         Button signUp = (Button) rootView.findViewById(R.id.sign_up_button);
-        
+
 
         return rootView;
     }
