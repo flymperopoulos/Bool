@@ -47,7 +47,6 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
 
     private Context context;
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
