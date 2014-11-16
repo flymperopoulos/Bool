@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +44,11 @@ public class MainPageFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_my, container, false);
         final ListView listViewQuestion = (ListView) rootView.findViewById(R.id.listquestions);
+
+        final ImageView check = (ImageView) rootView.findViewById(R.id.check);
+        final ImageView nope = (ImageView) rootView.findViewById(R.id.nope);
+
+
         questions = ((MyTabActivity)getActivity()).questions;
         questionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
         httpRequestHandler = ((MyTabActivity)getActivity()).httpRequestHandler;
@@ -55,7 +62,7 @@ public class MainPageFragment extends Fragment {
 
         listViewQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, long l) {
                 String pickedQuestion = (String) listViewQuestion.getItemAtPosition(i);
                 pickedQuestion = pickedQuestion.replaceAll("^\\p{Punct}*|\\p{Punct}+$|\\p{Punct}{2,}", "");
                 ArrayList<String> split = new ArrayList<String>(Arrays.asList(pickedQuestion.split(" ")));
@@ -63,12 +70,22 @@ public class MainPageFragment extends Fragment {
                     public void onSwipeTop() {}
 
                     public void onSwipeRight() {
+
+//                        nope.setVisibility(ImageView.VISIBLE);
                         httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
+
+//                        (rootView.findViewById(R.id.check)).setVisibility(ImageView.VISIBLE);
+                        slideToLeft(view);
                         questionAdapter.removeQuestions(i);
+
                     }
 
                     public void onSwipeLeft() {
+                        check.setVisibility(ImageView.VISIBLE);
                         httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
+
+                        slideToRight(view);
+
                         questionAdapter.removeQuestions(i);
                     }
 
@@ -138,4 +155,20 @@ public class MainPageFragment extends Fragment {
 
         return rootView;
     }
+    public void slideToRight(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,view.getWidth(),0,0);
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+    }
+    // To animate view slide out from right to left
+    public void slideToLeft(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+    }
+
 }

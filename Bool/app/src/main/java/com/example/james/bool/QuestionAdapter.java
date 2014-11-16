@@ -1,10 +1,12 @@
 package com.example.james.bool;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class QuestionAdapter extends ArrayAdapter<String>{
 
     private class QuestionHolder {
         TextView name, body;
+        ImageView check, nope;
     }
 
     @Override
@@ -40,6 +43,8 @@ public class QuestionAdapter extends ArrayAdapter<String>{
         //TextViews
 //        holder.name = (TextView) view.findViewById(R.id.item_profile_name);
         holder.body = (TextView) view.findViewById(R.id.question_item);
+        holder.check = (ImageView) view.findViewById(R.id.check);
+//        holder.nope = (ImageView) view.findViewById(R.id.nope);
 
         fillViews(holder, questions.get(position));
         return view;
@@ -57,7 +62,7 @@ public class QuestionAdapter extends ArrayAdapter<String>{
     private void fillViews(QuestionHolder holder, String question){
         holder.body.setText(question);
 
-        //holder.picture.setImageDrawable(getProfileDrawable(chat.userId));
+//        holder.check.setImageDrawable();
     }
     public void addQuestions(String s){
 //        this.questions = new ArrayList<String>();
