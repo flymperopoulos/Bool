@@ -53,12 +53,9 @@ public class HttpRequestHandler {
     ArrayList<String> questionList;
     ArrayList<String> answerList;
     QuestionAdapter questionAdapter;
-
     Map<String, String> nameId;
-    boolean credentials;
 
     public static String id;
-
     public static String password;
     public static String email;
 
@@ -72,26 +69,40 @@ public class HttpRequestHandler {
     public void getQuestions(){
         questionAdapter = ((MyTabActivity)context).questionAdapter;
         nameId = new HashMap<String, String>();
-        Log.d("adapter", questionAdapter.toString());
+        Log.d("adapter", Integer.toString(questionAdapter.getCount()));
         questionAdapter.reset();
-        ArrayList<String> yo = new ArrayList<String>();
         JsonArrayRequest jReq = new JsonArrayRequest(URL,
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
+                    Boolean add = true;
+                    Log.d("Going", "begin");
                     for (int i = 0; i < response.length(); i++) {
                         try {
-//                            JSONArray answeredA  = response.getJSONObject(i).getJSONArray("answersA");
-//                            JSONArray answeredb  = response.getJSONObject(i).getJSONArray("answersB");
-//                            for(int j -)
-
-
-                            String s = response.getJSONObject(i).getString("question");
-                            Log.d("BITCH", s);
-                            questionAdapter.addQuestions(s);
-                            String userid = response.getJSONObject(i).getString("_id");
-
-                            nameId.put(s ,userid);
+                            if(response.getJSONObject(i).getJSONArray("answersA").length() > 0){
+                                JSONArray answeredA  = response.getJSONObject(i).getJSONArray("answersA");
+                                for(int j = 0; j< answeredA.length(); j++){
+                                    if((answeredA.get(j).toString().contains(id))){
+                                        add = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if(response.getJSONObject(i).getJSONArray("answersB").length() > 0){
+                                JSONArray answeredB  = response.getJSONObject(i).getJSONArray("answersB");
+                                for(int j = 0; j< answeredB.length(); j++){
+                                    if ((answeredB.get(j).toString().contains(id))){
+                                        add = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (add){
+                                String s = response.getJSONObject(i).getString("question");
+                                questionAdapter.addQuestions(s);
+                                String userid = response.getJSONObject(i).getString("_id");
+                                nameId.put(s, userid);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,8 +118,6 @@ public class HttpRequestHandler {
             }
         });
         queue.add(jReq);
-
-
     }
 
     public void getAnswers(){
@@ -133,7 +142,6 @@ public class HttpRequestHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle error
-
             }
         });
         queue.add(jReq);
@@ -159,7 +167,7 @@ public class HttpRequestHandler {
 
     }
 
-    public boolean postCredentials(final String email1, final String password1){
+    public void postCredentials(final String email1, final String password1){
         JSONObject obj = new JSONObject();
 
 
@@ -177,7 +185,6 @@ public class HttpRequestHandler {
                 new Response.Listener<JSONObject>(){
                     public void onResponse(JSONObject response){
                             Log.d("RSPONDLSKJFLSKDJFLSDFSDFSD", Integer.toString(response.length()));
-
                             if(response.length() > 4){
                                 try{
                                     id = response.getString("_id");
@@ -204,15 +211,7 @@ public class HttpRequestHandler {
                                 } catch (JSONException e) {
                                      e.printStackTrace();
                                 }
-
-
-                                credentials = false;
-
                             }
-
-                            Log.d("JSON returning", response.toString());
-
-
                     }
                 }, new Response.ErrorListener(){
             @Override
@@ -229,7 +228,6 @@ public class HttpRequestHandler {
             }
         };
         queue.add(jsonRequest);
-        return credentials;
     }
     public void signUp(Map<String, String> info){
         Log.d("LENGTH", Integer.toString(info.size()));
@@ -287,12 +285,9 @@ public class HttpRequestHandler {
 
         JSONObject object = new JSONObject();
         try{
-            ArrayList<String> temp = new ArrayList<String>();
             object.put("question", q);
             object.put("optionA", a);
             object.put("optionB", b);
-            object.put("answersA", temp);
-            object.put("answersB", temp);
             object.put("poster", id);
         }
         catch (JSONException e){

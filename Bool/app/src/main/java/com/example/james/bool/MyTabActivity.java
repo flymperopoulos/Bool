@@ -42,6 +42,7 @@ public class MyTabActivity extends Activity {
 
         id = "BITCH";
         questions = new ArrayList<String>();
+        questions.add("TO");
         questionAdapter = new QuestionAdapter(this, R.layout.question_item, questions);
 
         actionBar = getActionBar();

@@ -61,6 +61,7 @@ public class MainPageFragment extends Fragment {
         questionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
         httpRequestHandler = ((MyTabActivity)getActivity()).httpRequestHandler;
 
+        Log.d("YO", "YO");
         httpRequestHandler.getQuestions();
         questions = httpRequestHandler.questionList;
 
