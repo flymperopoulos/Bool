@@ -22,7 +22,7 @@
     <string name="Occupation">Occupation</string>
     <string name="age">Age</string>
     <string name="logout">Logout</string>
-    <string name="bools">Bools</string>
+    <string name="bools">My Bools</string>
     <string name="groups">Groups</string>
 
     <string-array name="races">

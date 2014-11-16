@@ -25,7 +25,9 @@ public class MainPageFragment extends Fragment {
 
     Context context;
     ArrayList<String> questions;
+    ArrayList<String> myQuestions;
     QuestionAdapter questionAdapter;
+    QuestionAdapter myQuestionAdapter;
 
     int[] viewCoords;
 
@@ -50,6 +52,11 @@ public class MainPageFragment extends Fragment {
 
         questions = ((MyTabActivity)getActivity()).questions;
         questionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
+
+
+        myQuestions = ((MyTabActivity)getActivity()).questions;
+        myQuestionAdapter = ((MyTabActivity)getActivity()).questionAdapter;
+
         httpRequestHandler = ((MyTabActivity)getActivity()).httpRequestHandler;
 
         httpRequestHandler.getQuestions();
@@ -179,6 +186,7 @@ public class MainPageFragment extends Fragment {
 
         return rootView;
     }
+
     public void slideToRight(View view){
         TranslateAnimation animate = new TranslateAnimation(0,view.getWidth(),0,0);
         animate.setDuration(500);

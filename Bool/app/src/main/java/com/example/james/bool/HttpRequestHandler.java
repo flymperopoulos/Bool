@@ -31,7 +31,11 @@ public class HttpRequestHandler {
     RequestQueue queue;
     String URL;
     ArrayList<String> questionList;
+    ArrayList<String> myQuestionList;
+
     QuestionAdapter questionAdapter;
+    QuestionAdapter myQuestionAdapter;
+
     Map<String, String> nameId;
 
     public static String id;
@@ -98,15 +102,27 @@ public class HttpRequestHandler {
     }
 
     public void getAnswers(){
-        final ArrayList<String> answerList = new ArrayList<String>();
-        JsonArrayRequest jReq = new JsonArrayRequest(URL,
+
+        myQuestionList = new ArrayList<String>();
+        myQuestionAdapter = ((MyTabActivity)context).myQuestionAdapter;
+        myQuestionAdapter.reset();
+        if(myQuestionAdapter !=null) {
+            Log.d("ADAPTER COUNT", Integer.toString(myQuestionAdapter.getCount()));
+        }
+        Log.d("MY ID", id);
+        JsonArrayRequest jReq = new JsonArrayRequest("http://104.131.46.241:3000/questions/user/" + id,
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     for (int i = 0; i < response.length(); i++) {
                         try {
-                            String s = response.getJSONObject(i).getString("answers");
-                            answerList.add(s);
+                            if(response.getJSONObject(i).getString("question") == null){
+
+                            }else{
+                                String s = response.getJSONObject(i).getString("question");
+                                myQuestionAdapter.addQuestions(s);
+                                Log.d("STRING", s);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -250,7 +266,6 @@ public class HttpRequestHandler {
     }
 
     public JSONObject createJSON(String q, String a, String b){
-//        id = ((MyTabActivity)context).id;
 
         JSONObject object = new JSONObject();
         try{

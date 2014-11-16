@@ -24,9 +24,13 @@ public class MyTabActivity extends Activity {
     Fragment fragmentTab3 = new ResultFragment();
     ActionBar actionBar;
     QuestionAdapter questionAdapter;
+    QuestionAdapter myQuestionAdapter;
+
     Map<String, String> answered;
 
     ArrayList<String> questions;
+    ArrayList<String> myQuestion;
+
     HttpRequestHandler httpRequestHandler;
 
     @Override
@@ -38,7 +42,9 @@ public class MyTabActivity extends Activity {
 
         questions = new ArrayList<String>();
         questions.add("TO");
+        myQuestion= new ArrayList<String>();
         questionAdapter = new QuestionAdapter(this, R.layout.question_item, questions);
+        myQuestionAdapter = new QuestionAdapter(this, R.layout.question_item, myQuestion);
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
