@@ -46,13 +46,13 @@ public class MyTabActivity extends Activity {
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//        tab1 = actionBar.newTab().setIcon(R.drawable.ic_social_people);
-//        tab2 = actionBar.newTab().setIcon(R.drawable.ic_maps_map);
-//        tab3 = actionBar.newTab().setIcon(R.drawable.ic_image_timer_auto);
+        tab1 = actionBar.newTab().setIcon(R.drawable.groups);
+        tab2 = actionBar.newTab().setIcon(R.drawable.bull1);
+        tab3 = actionBar.newTab().setIcon(R.drawable.profile);
 
-        tab1 = actionBar.newTab().setText("Group");
-        tab2 = actionBar.newTab().setText("Questions");
-        tab3 = actionBar.newTab().setText("Result");
+//        tab1 = actionBar.newTab().setText("Group");
+//        tab2 = actionBar.newTab().setText("Questions");
+//        tab3 = actionBar.newTab().setText("Result");
 
         tab1.setTabListener(new MyTabListener(fragmentTab1));
         tab2.setTabListener(new MyTabListener(fragmentTab2));
