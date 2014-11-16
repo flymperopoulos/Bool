@@ -44,7 +44,6 @@ public class MainPageFragment extends Fragment {
 
     HttpRequestHandler httpRequestHandler;
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -63,8 +62,6 @@ public class MainPageFragment extends Fragment {
 
         httpRequestHandler.getQuestions();
         questions = httpRequestHandler.questionList;
-
-
 
         questionAdapter.notifyDataSetChanged();
 
@@ -115,7 +112,7 @@ public class MainPageFragment extends Fragment {
                 }
             }
         });
-        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
+//        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
 
 //        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
 //            public void onSwipeTop() {}
