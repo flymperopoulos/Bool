@@ -75,7 +75,7 @@ public class MainPageFragment extends Fragment {
                         httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
 
 //                        (rootView.findViewById(R.id.check)).setVisibility(ImageView.VISIBLE);
-                        slideToLeft(view);
+                        slideToRight(view);
                         questionAdapter.removeQuestions(i);
 
                     }
@@ -84,7 +84,7 @@ public class MainPageFragment extends Fragment {
                         check.setVisibility(ImageView.VISIBLE);
                         httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
 
-                        slideToRight(view);
+                        slideToLeft(view);
 
                         questionAdapter.removeQuestions(i);
                     }
