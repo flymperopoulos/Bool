@@ -56,9 +56,9 @@ public class MainPageFragment extends Fragment {
         questions = httpRequestHandler.questionList;
 
         questionAdapter.notifyDataSetChanged();
-        questionAdapter.addQuestions("THIS");
-        questionAdapter.addQuestions("IS");
-        questionAdapter.addQuestions("SPARTA");
+//        questionAdapter.addQuestions("THIS");
+//        questionAdapter.addQuestions("IS");
+//        questionAdapter.addQuestions("SPARTA");
 
         listViewQuestion.setAdapter(questionAdapter);
 
