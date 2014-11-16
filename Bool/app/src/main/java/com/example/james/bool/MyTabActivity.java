@@ -16,6 +16,8 @@ import android.os.Build;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 
 public class MyTabActivity extends Activity {
@@ -26,6 +28,7 @@ public class MyTabActivity extends Activity {
     Fragment fragmentTab3 = new ResultFragment();
     ActionBar actionBar;
     QuestionAdapter questionAdapter;
+    Map<String, String> answered;
 
     ArrayList<String> questions;
     HttpRequestHandler httpRequestHandler;
@@ -40,8 +43,7 @@ public class MyTabActivity extends Activity {
 
         id = "BITCH";
         questions = new ArrayList<String>();
-        questions.add("Do you like Facebook or Google?");
-        questions.add("Do you like Filippos or James?");
+        questions.add("TO");
         questionAdapter = new QuestionAdapter(this, R.layout.question_item, questions);
 
         actionBar = getActionBar();
@@ -98,8 +100,16 @@ public class MyTabActivity extends Activity {
         alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 String newQuestion = edit.getText().toString();
-                questions.add(newQuestion);
-                questionAdapter.notifyDataSetChanged();
+                newQuestion = newQuestion.replaceAll("^\\p{Punct}*|\\p{Punct}+$|\\p{Punct}{2,}", "");
+                ArrayList<String> split = new ArrayList<String>(Arrays.asList(newQuestion.split(" ")));
+                if (split.contains("or")){
+                    String a = split.get(split.indexOf("or")-1);
+                    String b = split.get(split.indexOf("or")+1);
+                    httpRequestHandler.postQuestion(newQuestion, a, b);
+                }
+                else{
+                    httpRequestHandler.postQuestion(newQuestion, "yes", "no");
+                }
             }
         })
             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -12,24 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by james on 11/14/14.
@@ -39,8 +24,7 @@ public class MainPageFragment extends Fragment {
     Context context;
     ArrayList<String> questions;
     QuestionAdapter questionAdapter;
-    RequestQueue queue;
-    JSONArray questionList;
+;
 
     HttpRequestHandler httpRequestHandler;
 
@@ -76,16 +60,24 @@ public class MainPageFragment extends Fragment {
                 if (split.contains("or")) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(context);
                     alert.setTitle("What do you think?");
-                    alert.setPositiveButton(split.get(split.indexOf("or")-1), new DialogInterface.OnClickListener() {
+                    final String posAns =split.get(split.indexOf("or")-1);
+                    final String negAns =split.get(split.indexOf("or")-1);
+                    alert.setPositiveButton(posAns, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Continue accessing library
+
+                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
                             questionAdapter.removeQuestions(i);
+                            Log.d("BREAKING", "why");
                         }
                     })
-                            .setNegativeButton(split.get(split.indexOf("or")+1), new DialogInterface.OnClickListener() {
+                            .setNegativeButton(negAns, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
+
+                                    httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
                                     questionAdapter.removeQuestions(i);
+                                    Log.d("BREAKING", "why2");
                                 }
                             })
 
@@ -97,14 +89,21 @@ public class MainPageFragment extends Fragment {
                     alert.setTitle("What do you think?");
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+
+                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
                             questionAdapter.removeQuestions(i);
+
+                            Log.d("BREAKING", "why3");
                         }
                     })
 
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
+
+                                    httpRequestHandler.postAnswers("A", (String) listViewQuestion.getItemAtPosition(i));
                                     questionAdapter.removeQuestions(i);
+                                    Log.d("BREAKING", "why4");
                                 }
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -112,21 +111,6 @@ public class MainPageFragment extends Fragment {
                 }
             }
         });
-//        httpRequestHandler.postQuestion("YOU SUCK MANG", "lkasjdflaksd", "df");
-
-//        listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
-//            public void onSwipeTop() {}
-//
-//            public void onSwipeRight() {
-//                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            public void onSwipeLeft() {
-//                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            public void onSwipeBottom() {}
-//        });
 
         return rootView;
     }

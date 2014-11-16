@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,18 +35,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by flymperopoulos on 11/5/2014.
  */
-public class EditProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class EditProfileFragment extends Fragment{
 
     static final int SELECT_IMAGE = 0;
 
     private Context context;
+    HttpRequestHandler httpRequestHandler;
+    Map<String, String> personalInfo;
 
     @Override
     public void onAttach(Activity activity) {
@@ -98,7 +108,9 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.editprofile_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.editprofile_fragment, container, false);
+        personalInfo = new HashMap<String, String>();
+        httpRequestHandler = ((MyActivity)getActivity()).httpRequestHandler;
 
         // Spinners initialized
         Spinner spinnerRace = (Spinner) rootView.findViewById(R.id.spinnerRace);
@@ -112,6 +124,31 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
 
         final EditText FirstName = (EditText) rootView.findViewById(R.id.firstname);
         final EditText LastName = (EditText) rootView.findViewById(R.id.lastname);
+        final EditText age = (EditText) rootView.findViewById(R.id.age);
+
+
+        RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radioSex);
+        Button male = (Button) rootView.findViewById(R.id.radioMale);
+        Button female = (Button) rootView.findViewById(R.id.radioFemale);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                switch(i){
+//                    case R.id.radioMale:{
+//                        personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioMale)).getText().toString());
+//                    }
+//                    case R.id.radioFemale:{
+//                        personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioFemale)).getText().toString());
+//                    }
+//                }
+                if(i == R.id.radioMale) {
+                    personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioMale)).getText().toString());
+                }else{
+                    personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioFemale)).getText().toString());
+                }
+            }
+        });
 
         // Adapters for spinners defined
         ArrayAdapter<CharSequence> adapterRace = ArrayAdapter.createFromResource(getActivity(),
@@ -123,18 +160,42 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
         ArrayAdapter<CharSequence> adapterState = ArrayAdapter.createFromResource(getActivity(),
                 R.array.states, R.layout.spinner_item);
 
-
         adapterRace.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRace.setAdapter(adapterRace);
-        spinnerRace.setOnItemSelectedListener(this);
+        spinnerRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                personalInfo.put("race",(String) adapterView.getItemAtPosition(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
 
         adapterOccupation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOccupation.setAdapter(adapterOccupation);
-        spinnerOccupation.setOnItemSelectedListener(this);
+        spinnerOccupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                personalInfo.put("occupation", (String)adapterView.getItemAtPosition(i));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
         adapterState.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerState.setAdapter(adapterState);
-        spinnerState.setOnItemSelectedListener(this);
+        spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                personalInfo.put("state", (String)adapterView.getItemAtPosition(i));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
         final RelativeLayout relativeLayout = (RelativeLayout) rootView.findViewById(R.id.relativelayout);
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -157,12 +218,15 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
                     return;
                 }
                 Toast.makeText(context, "Welcome, " + FirstName.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+                personalInfo.put("firstName", FirstName.getText().toString());
+                personalInfo.put("lastName", LastName.getText().toString());
+                personalInfo.put("age", age.getText().toString());
+                personalInfo.put("city", ((EditText)rootView.findViewById(R.id.city)).getText().toString());
 
-                final MyActivity activity = (MyActivity) getActivity();
-                final String first = FirstName.getText().toString();
-                final String last = LastName.getText().toString();
-                Intent BeginMain = new Intent("android.intent.action.LATERMAIN");
-                startActivity(BeginMain);
+
+
+                httpRequestHandler.signUp(personalInfo);
+
             }
         });
 
@@ -188,29 +252,8 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
             }
         });
 
-
         return rootView;
 
-
     }
-
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-        switch (position) {
-            case 0:
-                // Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                // Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                // Whatever you want to happen when the thrid item gets selected
-                break;
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {}
 }
 
