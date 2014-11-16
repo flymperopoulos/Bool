@@ -6,15 +6,13 @@
         android:id="@+id/action_questions"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@drawable/write"
-        android:title="new_q"/>
+        android:icon="@drawable/write"/>
+
 
     <item
-        android:id="@+id/action_gear"
+        android:id="@+id/logout"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@drawable/settingsbutton"
-        android:title="new_q"/>
-
+        android:icon="@drawable/logout"/>
 
 </menu>

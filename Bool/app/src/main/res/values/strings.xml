@@ -21,7 +21,7 @@
     <string name="state">State</string>
     <string name="Occupation">Occupation</string>
     <string name="age">Age</string>
-
+    <string name="logout">Logout</string>
 
     <string-array name="races">
         <item>Race</item>

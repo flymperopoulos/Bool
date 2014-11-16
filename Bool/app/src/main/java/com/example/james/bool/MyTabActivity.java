@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,8 +81,9 @@ public class MyTabActivity extends Activity {
             case R.id.action_questions:
                 addQuestion();
                 return true;
-            case R.id.action_gear:
-                return true;
+            case R.id.logout:
+                Intent BeginMain = new Intent("android.intent.action.BEGINMAIN");
+                startActivity(BeginMain);
             default:
                 return super.onOptionsItemSelected(item);
         }

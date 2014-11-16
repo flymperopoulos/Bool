@@ -30,7 +30,7 @@ public class MyActivity extends Activity {
                     .commit();
         }
     }
-//
+
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
@@ -44,8 +44,8 @@ public class MyActivity extends Activity {
 //        // automatically handle clicks on the Home/Up button, so long
 //        // as you specify a parent activity in AndroidManifest.xml.
 //        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
+//        if (id == R.id.logout) {
+//            changeToSignInFragment();
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
@@ -73,8 +73,4 @@ public class MyActivity extends Activity {
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
-
-
-
-
 }
