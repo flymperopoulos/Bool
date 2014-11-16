@@ -27,6 +27,7 @@ public class SignInFragment extends Fragment {
 
 
     private Context context;
+    HttpRequestHandler httpRequestHandler;
 
     @Override
     public void onAttach(Activity activity) {
@@ -38,6 +39,7 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.login_fragment, container, false);
         Button signUp = (Button) rootView.findViewById(R.id.sign_up_button);
+        httpRequestHandler = ((MyActivity) getActivity()).httpRequestHandler;
 
         final TextView ForgotPassword = (TextView) rootView.findViewById(R.id.forgot_password);
         ForgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
@@ -70,14 +72,23 @@ public class SignInFragment extends Fragment {
                 Pattern pattern = Pattern.compile(emailPattern);
                 Matcher matcher = pattern.matcher(email);
 
-                if (matcher.matches()&& Password.length()>8){
-                    MyActivity activity = (MyActivity) getActivity();
-                    activity.changeToEditProfile();
+                if (matcher.matches()&& Password.length()>4){
+                    httpRequestHandler.postCredentials(email, Password.getText().toString());
+
+//                    if(httpRequestHandler.postCredentials(email, Password.getText().toString())){
+//                    }
+//                    else{
+//                        MyActivity activity = (MyActivity) getActivity();
+//                        activity.changeToEditProfile();
+//                    }
+//                    MyActivity activity = (MyActivity) getActivity();
+//                        activity.changeToEditProfile();
+
                 }
-                else if(!matcher.matches() && Password.length()>8){
+                else if(!matcher.matches() && Password.length()>4){
                     Toast.makeText(context,"Invalid email address",Toast.LENGTH_SHORT).show();
                 }
-                else if(matcher.matches() && Password.length() < 8) {
+                else if(matcher.matches() && Password.length() < 4) {
                     Toast.makeText(context, "Password less than 8 characters", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -87,5 +98,15 @@ public class SignInFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public void changeToEditProfile() {
+        MyActivity activity = (MyActivity) getActivity();
+        activity.changeToEditProfile();
+    }
+
+    public void changeToTabActivity() {
+        Intent BeginMain = new Intent("android.intent.action.LATERMAIN");
+        startActivity(BeginMain);
     }
 }

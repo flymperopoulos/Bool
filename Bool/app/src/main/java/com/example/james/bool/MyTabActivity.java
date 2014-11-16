@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 
 public class MyTabActivity extends Activity {
@@ -26,6 +27,7 @@ public class MyTabActivity extends Activity {
     Fragment fragmentTab3 = new ResultFragment();
     ActionBar actionBar;
     QuestionAdapter questionAdapter;
+    Map<String, String> answered;
 
     ArrayList<String> questions;
     HttpRequestHandler httpRequestHandler;
@@ -40,8 +42,6 @@ public class MyTabActivity extends Activity {
 
         id = "BITCH";
         questions = new ArrayList<String>();
-        questions.add("Do you like Facebook or Google?");
-        questions.add("Do you like Filippos or James?");
         questionAdapter = new QuestionAdapter(this, R.layout.question_item, questions);
 
         actionBar = getActionBar();
