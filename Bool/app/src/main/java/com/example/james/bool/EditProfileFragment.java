@@ -8,23 +8,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,14 +29,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,14 +125,6 @@ public class EditProfileFragment extends Fragment{
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                switch(i){
-//                    case R.id.radioMale:{
-//                        personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioMale)).getText().toString());
-//                    }
-//                    case R.id.radioFemale:{
-//                        personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioFemale)).getText().toString());
-//                    }
-//                }
                 if(i == R.id.radioMale) {
                     personalInfo.put("sex", ((Button) rootView.findViewById(R.id.radioMale)).getText().toString());
                 }else{
@@ -167,13 +150,10 @@ public class EditProfileFragment extends Fragment{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 personalInfo.put("race",(String) adapterView.getItemAtPosition(i));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-
 
         adapterOccupation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOccupation.setAdapter(adapterOccupation);
@@ -222,8 +202,6 @@ public class EditProfileFragment extends Fragment{
                 personalInfo.put("lastName", LastName.getText().toString());
                 personalInfo.put("age", age.getText().toString());
                 personalInfo.put("city", ((EditText)rootView.findViewById(R.id.city)).getText().toString());
-
-
 
                 httpRequestHandler.signUp(personalInfo);
 

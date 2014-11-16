@@ -4,11 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    >
 
     <ImageView
         android:id="@+id/check"
@@ -17,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:src="@drawable/check"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/nope"
@@ -37,7 +32,5 @@
         android:text="James"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"/>
-
-    </LinearLayout>
 
 </RelativeLayout>

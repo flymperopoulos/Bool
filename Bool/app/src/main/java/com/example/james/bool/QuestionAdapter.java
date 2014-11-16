@@ -1,7 +1,6 @@
 package com.example.james.bool;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +48,9 @@ public class QuestionAdapter extends ArrayAdapter<String>{
         fillViews(holder, questions.get(position));
         return view;
     }
+
+
+
     @Override
     public int getCount(){
         return this.questions.size();

@@ -2,7 +2,6 @@ package com.example.james.bool;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,33 +10,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ClearCacheRequest;
-import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,11 +89,9 @@ public class HttpRequestHandler {
                     }
                 }
             }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle error
-
             }
         });
         queue.add(jReq);
@@ -128,7 +106,6 @@ public class HttpRequestHandler {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             String s = response.getJSONObject(i).getString("answers");
-                            Log.d("BITCH", s);
                             answerList.add(s);
 
                         } catch (JSONException e) {
@@ -167,8 +144,6 @@ public class HttpRequestHandler {
 
     public void postCredentials(final String email1, final String password1){
         JSONObject obj = new JSONObject();
-
-
         try {
             obj.put("email",email1);
             obj.put("password",password1);
@@ -182,7 +157,6 @@ public class HttpRequestHandler {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, "http://104.131.46.241:3000/mobilelogin", obj,
                 new Response.Listener<JSONObject>(){
                     public void onResponse(JSONObject response){
-                            Log.d("RSPONDLSKJFLSKDJFLSDFSDFSD", Integer.toString(response.length()));
                             if(response.length() > 4){
                                 try{
                                     id = response.getString("_id");
@@ -263,7 +237,6 @@ public class HttpRequestHandler {
             public void onErrorResponse(VolleyError error) {
                 // Handle error
                 error.printStackTrace();
-
             }
         }) {
         @Override
@@ -274,8 +247,6 @@ public class HttpRequestHandler {
         }
     };
         queue.add(jsonRequest);
-
-
     }
 
     public JSONObject createJSON(String q, String a, String b){
@@ -305,21 +276,9 @@ public class HttpRequestHandler {
             e.printStackTrace();
         }
 
-        Log.d("ID ID", URL + "/" + nameId.get(q));
+        Log.d(q, URL + "/" + nameId.get(q));
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, URL+"/"+ nameId.get(q), obj,
-                new Response.Listener<JSONObject>(){
-                    public void onResponse(JSONObject response){
-                        Log.d("JSON returning", response.toString());
-
-                    }
-                }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Handle error
-                error.printStackTrace();
-
-            }
-        });
+                null, null);
 
         queue.add(jsonRequest);
     }

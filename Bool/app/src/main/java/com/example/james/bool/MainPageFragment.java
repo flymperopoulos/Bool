@@ -1,10 +1,9 @@
 package com.example.james.bool;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +26,8 @@ public class MainPageFragment extends Fragment {
     Context context;
     ArrayList<String> questions;
     QuestionAdapter questionAdapter;
-;
+
+    int[] viewCoords;
 
     HttpRequestHandler httpRequestHandler;
 
@@ -57,21 +56,32 @@ public class MainPageFragment extends Fragment {
         questions = httpRequestHandler.questionList;
 
         questionAdapter.notifyDataSetChanged();
+        questionAdapter.addQuestions("THIS");
+        questionAdapter.addQuestions("IS");
+        questionAdapter.addQuestions("SPARTA");
 
         listViewQuestion.setAdapter(questionAdapter);
 
         listViewQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, long l) {
+                Log.v("Item position", Integer.toString(i));
                 String pickedQuestion = (String) listViewQuestion.getItemAtPosition(i);
                 pickedQuestion = pickedQuestion.replaceAll("^\\p{Punct}*|\\p{Punct}+$|\\p{Punct}{2,}", "");
                 ArrayList<String> split = new ArrayList<String>(Arrays.asList(pickedQuestion.split(" ")));
+
+//                viewCoords= new int[2];
+//                view.getLocationOnScreen(viewCoords);
+//                Log.d("Touched Xcoord", Integer.toString(viewCoords[0]));
+//                Log.d("Touched Ycoord", Integer.toString(800 -viewCoords[1]));
+
                 listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(context) {
-                    public void onSwipeTop() {}
+                    public void onSwipeTop() {
+                    }
 
                     public void onSwipeRight() {
-
-//                        nope.setVisibility(ImageView.VISIBLE);
+                        Log.v("Darn", listViewQuestion.getItemAtPosition(i).getClass().getName());
+                        //nope.setVisibility(View.VISIBLE);
                         httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
 
 //                        (rootView.findViewById(R.id.check)).setVisibility(ImageView.VISIBLE);
@@ -81,22 +91,36 @@ public class MainPageFragment extends Fragment {
                     }
 
                     public void onSwipeLeft() {
-                        check.setVisibility(ImageView.VISIBLE);
-                        httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
+                        //check.setVisibility(View.VISIBLE);
+                        httpRequestHandler.postAnswers("A", (String) listViewQuestion.getItemAtPosition(i));
 
                         slideToLeft(view);
 
                         questionAdapter.removeQuestions(i);
                     }
 
-                    public void onSwipeBottom() {}
+                    public void onSwipeBottom() {
+                    }
 
                     public boolean onTouch(View v, MotionEvent event) {
+//                        int touchX = (int) event.getX();
+//                        int touchY = (int) event.getY();
+//                        Log.d("xdifference" ,Integer.toString(touchX - viewCoords[1]));
+//                        Log.d("ydifference" ,Integer.toString(Math.abs(touchY - viewCoords[0])));
+//
+//                        Log.d("XValue" ,Integer.toString(touchX ));
+//                        Log.d("YValue" ,Integer.toString(touchY ));
+//                        Log.d("BOOL", Boolean.toString(gestureDetector.onTouchEvent(event)));
+//                        Log.d("value", Integer.toString(Math.abs((touchY - viewCoords[1]))));
+//                        if(Math.abs((touchY - viewCoords[1])) <380 && Math.abs((touchY - viewCoords[1])) >330) {
+//                            return gestureDetector.onTouchEvent(event);
+//                        }
+//                        else{
+//                            return false;
+//                        }
                         return gestureDetector.onTouchEvent(event);
                     }
                 });
-
-
 
 //                if (split.contains("or")) {
 //                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
