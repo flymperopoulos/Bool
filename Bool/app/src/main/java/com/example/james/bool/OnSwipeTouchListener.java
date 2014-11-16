@@ -11,7 +11,7 @@ import android.widget.Toast;
 */
 public class OnSwipeTouchListener implements View.OnTouchListener {
 
-    private final GestureDetector gestureDetector;
+    public final GestureDetector gestureDetector;
 
     public OnSwipeTouchListener (Context ctx){
         gestureDetector = new GestureDetector(ctx, new GestureListener());

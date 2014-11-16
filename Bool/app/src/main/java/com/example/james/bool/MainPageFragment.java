@@ -8,10 +8,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,58 +59,80 @@ public class MainPageFragment extends Fragment {
                 String pickedQuestion = (String) listViewQuestion.getItemAtPosition(i);
                 pickedQuestion = pickedQuestion.replaceAll("^\\p{Punct}*|\\p{Punct}+$|\\p{Punct}{2,}", "");
                 ArrayList<String> split = new ArrayList<String>(Arrays.asList(pickedQuestion.split(" ")));
-                if (split.contains("or")) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.setTitle("What do you think?");
-                    final String posAns =split.get(split.indexOf("or")-1);
-                    final String negAns =split.get(split.indexOf("or")-1);
-                    alert.setPositiveButton(posAns, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue accessing library
+                listViewQuestion.setOnTouchListener(new OnSwipeTouchListener(context) {
+                    public void onSwipeTop() {}
 
-                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
-                            questionAdapter.removeQuestions(i);
-                            Log.d("BREAKING", "why");
-                        }
-                    })
-                            .setNegativeButton(negAns, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
+                    public void onSwipeRight() {
+                        httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
+                        questionAdapter.removeQuestions(i);
+                    }
 
-                                    httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
-                                    questionAdapter.removeQuestions(i);
-                                    Log.d("BREAKING", "why2");
-                                }
-                            })
+                    public void onSwipeLeft() {
+                        httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
+                        questionAdapter.removeQuestions(i);
+                    }
 
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                } else {
+                    public void onSwipeBottom() {}
 
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.setTitle("What do you think?");
-                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+                    public boolean onTouch(View v, MotionEvent event) {
+                        return gestureDetector.onTouchEvent(event);
+                    }
+                });
 
-                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
-                            questionAdapter.removeQuestions(i);
 
-                            Log.d("BREAKING", "why3");
-                        }
-                    })
 
-                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-
-                                    httpRequestHandler.postAnswers("A", (String) listViewQuestion.getItemAtPosition(i));
-                                    questionAdapter.removeQuestions(i);
-                                    Log.d("BREAKING", "why4");
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
+//                if (split.contains("or")) {
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+//                    alert.setTitle("What do you think?");
+//                    final String posAns =split.get(split.indexOf("or")-1);
+//                    final String negAns =split.get(split.indexOf("or")-1);
+//                    alert.setPositiveButton(posAns, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // Continue accessing library
+//
+//                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
+//                            questionAdapter.removeQuestions(i);
+//                            Log.d("BREAKING", "why");
+//                        }
+//                    })
+//                            .setNegativeButton(negAns, new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // do nothing
+//
+//                                    httpRequestHandler.postAnswers("A",(String) listViewQuestion.getItemAtPosition(i));
+//                                    questionAdapter.removeQuestions(i);
+//                                    Log.d("BREAKING", "why2");
+//                                }
+//                            })
+//
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .show();
+//                } else {
+//
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+//                    alert.setTitle("What do you think?");
+//                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            httpRequestHandler.postAnswers("B", (String) listViewQuestion.getItemAtPosition(i));
+//                            questionAdapter.removeQuestions(i);
+//
+//                            Log.d("BREAKING", "why3");
+//                        }
+//                    })
+//
+//                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // do nothing
+//
+//                                    httpRequestHandler.postAnswers("A", (String) listViewQuestion.getItemAtPosition(i));
+//                                    questionAdapter.removeQuestions(i);
+//                                    Log.d("BREAKING", "why4");
+//                                }
+//                            })
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .show();
+//                }
             }
         });
 
