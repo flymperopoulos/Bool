@@ -115,13 +115,13 @@ public class EditProfileFragment extends Fragment implements AdapterView.OnItemS
 
         // Adapters for spinners defined
         ArrayAdapter<CharSequence> adapterRace = ArrayAdapter.createFromResource(getActivity(),
-                R.array.races, android.R.layout.simple_spinner_item);
+                R.array.races, R.layout.spinner_item);
 
         ArrayAdapter<CharSequence> adapterOccupation = ArrayAdapter.createFromResource(getActivity(),
-                R.array.occupations, android.R.layout.simple_spinner_item);
+                R.array.occupations, R.layout.spinner_item);
 
         ArrayAdapter<CharSequence> adapterState = ArrayAdapter.createFromResource(getActivity(),
-                R.array.states, android.R.layout.simple_spinner_item);
+                R.array.states, R.layout.spinner_item);
 
 
         adapterRace.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
